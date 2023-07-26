@@ -1,0 +1,20 @@
+{% form_theme contact_form 'bootstrap_4_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Note form!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Add Contact</h1>
+    {{ form_start(contact_form) }}
+        {{ form_row(contact_form.contact_name) }}
+        {{ form_row(contact_form.contact_email) }}
+        {{ form_row(contact_form.contact_title) }}
+        {{ form_row(contact_form.contact_message)}}
+        
+       
+        <button type="submit" class="btn btn-primary">Submit</button>
+    {{ form_end(contact_form) }}
+
+{% endblock %}
+
