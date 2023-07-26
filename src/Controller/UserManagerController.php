@@ -3,11 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -23,25 +27,20 @@ class UserManagerController extends AbstractController
         $form = $this->createForm(UserFormType::class, $u);
         $form->handleRequest($req);
 
-        if ($form->isSubmitted() && $form->isValid()) 
-            $data = $form->getData();{
+        if ($form->isSubmitted() && $form->isValid()) {
+            $u = $form->getData();
             // encode the plain password
-            $u->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $u,
-                    $form->get('password')->getData()
-                )
-            );
+            
 
-            $u = setRoles(["ROLE_ADMIN"]);
+            $u -> setRoles(["ROLE_ADMIN"]);
             $em->persist($u);
             $em->flush();
             // do anything else you need here, like send an email
 
-            return new RedirectResponse($this->urlGenerator->generate('app_user_manager'));
+            return new RedirectResponse($this->url->generate('app_user_manager'));
         }
 
-        return $this->render('user_manager/list.html.twig', [
+        return $this->render('user_manager/index.html.twig', [
             'u_form' => $form->createView(),
         ]);
     }
@@ -51,7 +50,7 @@ class UserManagerController extends AbstractController
         $query = $em->createQuery('SELECT u FROM App\Entity\User u');
         $lUser = $query->getResult();
         
-        return $this->render('user_manager/index.html.twig', [
+        return $this->render('user_manager/list.html.twig', [
             'data' => $lUser
         ]);
     }

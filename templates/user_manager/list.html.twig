@@ -18,10 +18,10 @@
         <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_san_pham')}}"><i class=""></i><span>List Product</span></a></li>
         
         <hr class="sidebar-divider my-0">
-        <li class="nav-item active"><a class="nav-link" href="{{path('app_register')}}"><i class=""></i><span>Add Admin Profile</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_user_manager_add')}}"><i class=""></i><span>Add Admin Profile</span></a></li>
 
         <hr class="sidebar-divider my-0" >
-        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_register')}}"><i class=""></i><span>List Admin Profile</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_user_manager')}}"><i class=""></i><span>List Admin Profile</span></a></li>
         
         <hr class="sidebar-divider my-0" >
         <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_contact')}}"><span>List Contact</span></a></li>
@@ -117,12 +117,12 @@
                     <td>{{u.getPassword()}}</td>
                     <td>
                         
-                        <a href="{{path('app_edit_register',{'id':user.getId()})}}" class="btn btn-success">Edit</a> 
+                        <a href="#" class="btn btn-success">Edit</a> 
                        
                     </td>
                     <td>
                         
-                        <a href="{{path('app_delete_register',{'id':user.getId()})}}" class="btn btn-danger">Delete</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
                         
                     </td>
                     </tr>
