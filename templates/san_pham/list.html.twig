@@ -18,13 +18,13 @@
         <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_san_pham')}}"><i class=""></i><span>List Product</span></a></li>
         
         <hr class="sidebar-divider my-0">
-        <li class="nav-item active"><a class="nav-link" href="{{path('app_register')}}"><i class=""></i><span>List User</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_register')}}"><i class=""></i><span>Add Admin Profile</span></a></li>
 
         <hr class="sidebar-divider my-0" >
-        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_register')}}"><i class=""></i><span>List Feedback</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_register')}}"><i class=""></i><span>List Admin Profile</span></a></li>
         
         <hr class="sidebar-divider my-0" >
-        <li class="nav-item active"><a class="nav-link" href=""><span>List Invoice</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_contact')}}"><span>List Contact</span></a></li>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
     </ul>
@@ -116,7 +116,7 @@
         <td>{{sp.getPrice()}}</td>
         
         <td>
-            <a href="{{path('app_edit_san_pham',{'id':sp.getId()})}}" class="btn btn-outline-warning">Edit</a>
+            <a href="{{path('app_edit_san_pham',{'id':sp.getId()})}}" class="btn btn-success">Edit</a>
             <a href="javascript:deletesp('{{path('app_delete_san_pham',{'id':sp.getId()})}}')" class="btn btn-danger">Delete</a>
             <!--<form>
             <button type="submit" formmethod="post" formaction="{{path('app_cart_add',{'product_id':sp.getId()})}}">Add to cart</button>

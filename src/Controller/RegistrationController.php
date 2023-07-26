@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RegistrationController extends AbstractController
 {
+    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    {      
+    }
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -68,7 +71,7 @@ class RegistrationController extends AbstractController
             
             
             
-            $user->setUsername($data->setUsername())->setPassword($data->setPassword())->setFirstName($data->setFirstName())->setLastName($data->setLastName());
+            $user->setUsername($data->getUsername())->setPassword($data->getPassword())->setFirstName($data->getFirstName())->setLastName($data->getLastName());
             $em->flush();
             return new RedirectResponse($this->urlGenerator->generate('app_ds_register'));
         }
