@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SuccessController!{% endblock %}
+
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{asset('css/my.css')}}">
+        {% endblock %}
+{% block body %}
+<div class="container">
+    <h1> Form Note</h1>
+    <p class="box">{{message}} at {{created}}</p>
+</div>
+{% endblock %}
