@@ -1,20 +1,121 @@
+{% form_theme sp_form 'bootstrap_4_layout.html.twig' %}
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserManagerController!{% endblock %}
+{% block title %}Hello Note form!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div id="wrapper">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" >
+            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+            <div class="sidebar-brand-text mx-3">Hello Admin</div>
+        </a>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_san_pham')}}"><i class=""></i><span>Add Product</span></a></li>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_san_pham')}}"><i class=""></i><span>List Product</span></a></li>
+        
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_register')}}"><i class=""></i><span>Add Admin Profile</span></a></li>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/semi_project/src/Controller/UserManagerController.php'|file_link(0) }}">src/Controller/UserManagerController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/semi_project/templates/user_manager/index.html.twig'|file_link(0) }}">templates/user_manager/index.html.twig</a></code></li>
+        <hr class="sidebar-divider my-0" >
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_register')}}"><i class=""></i><span>List Admin Profile</span></a></li>
+        
+        <hr class="sidebar-divider my-0" >
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_contact')}}"><span>List Contact</span></a></li>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
     </ul>
+
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <!-- Topbar Search -->
+                <form
+                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                            aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small"
+                                        placeholder="Search for..." aria-label="Search"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello admin1</span>
+                            
+                        </a>
+                    </li>
+                    <div class="topbar-divider d-none d-sm-block"></div>
+                    <a class="modal-footer" class="btn btn-secondary"  href="javascript:Logout('{{path('app_login')}}')" ><button>Logout</button></a>
+                </ul>
+            </nav>
+                <!-- Begin Page Content -->
+                <div calss="container-fluid ">
+                    <div class="card shadow mb-4">
+                <div class="container">                
+    <h1>Add admin</h1>
+    {{ form_start(u_form)}}
+    {{ form_widget(u_form)}}
+    
+    <input type="submit" value="Submit" class="btn btn-primary"/>
+    {{ form_end(u_form)}}
+    </div>
 </div>
+
+{% endblock %}
+{% block javascripts %}
+<script>
+    function Logout(url){
+        if(confirm("Do you want to sign out?")){
+            window.location.href = url;
+        }
+    }
+    </script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('vendor/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    <link rel="stylesheet" href="{{asset('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i')}}">
 {% endblock %}

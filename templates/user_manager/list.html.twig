@@ -1,7 +1,7 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}User Manager{% endblock %}
 
 {% block body %}
 <div id="wrapper">
@@ -92,7 +92,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-wight-bold text-primary" > Admin Profile
-            <a href="{{path('app_register')}}" class="btn btn-primary">ADD Admin Profile</a>
+            <a href="{{path('app_user_manager_add')}}" class="btn btn-primary">ADD Admin Profile</a>
           </h6>
     </div>
     <div class="card-body">
@@ -101,24 +101,20 @@
                 <thead>
                    <tr>
                     <th>No.</th>
-                    <th>ID</th>
                     <th>Username</th>
+                    <th>Fullname</th>
                     <th>Password</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
                     <th>Edit</th>
                     <th>Delete</th>
                    </tr>
                 </thead>
                 <tbody>
-                    {% for user in data %}
+                    {% for u in data %}
                    <tr>
                     <td>{{loop.index}}</td>
-                    <td>{{user.getId()}}</td>
-                    <td>{{user.getusername()}}</td>
-                    <td>{{user.getPassword()}}</td>
-                    <td>{{user.getFirstname()}}</td>
-                    <td>{{user.getLastname()}}</td>
+                    <td>{{u.getusername()}}</td>                    
+                    <td>{{u.getFirstname()}} {{u.getLastname()}}</td>
+                    <td>{{u.getPassword()}}</td>
                     <td>
                         
                         <a href="{{path('app_edit_register',{'id':user.getId()})}}" class="btn btn-success">Edit</a> 
