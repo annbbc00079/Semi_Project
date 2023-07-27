@@ -30,7 +30,12 @@ class UserManagerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $u = $form->getData();
             // encode the plain password
-            
+            $u->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $u,
+                    $form->get('password')->getData()
+                )
+            );
 
             $u -> setRoles(["ROLE_ADMIN"]);
             $em->persist($u);
@@ -54,12 +59,12 @@ class UserManagerController extends AbstractController
             'data' => $lUser
         ]);
     }
-    #[Route('/user/manager/{id}/delete', name: 'app_delete_user_manager')]
-    public function deleteuser(EntityManagerInterface $em, int $id,Request $req): Response
+    #[Route('/user/manager/{username}/delete', name: 'app_delete_user_manager')]
+    public function delete(EntityManagerInterface $em, string $username,Request $req): Response
     {
-        $u = $em->find(User::class, $id);
-        $em->remove($user);
+        $u = $em->find(User::class, $username);
+        $em->remove($u);
         $em->flush();
-        return new RedirectResponse($this->urlGenerator->generate('app_user_manager'));
+        return new RedirectResponse($this->url->generate('app_user_manager'));
     }
 }

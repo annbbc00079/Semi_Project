@@ -1,5 +1,5 @@
 
-{% extends 'base.html.twig' %}
+{% extends 'adbase.html.twig' %}
 
 {% block title %}User Manager{% endblock %}
 
@@ -122,7 +122,7 @@
                     </td>
                     <td>
                         
-                        <a href="javascript:deleteu('{{path('app_delete_user_manager')}}')" class="btn btn-danger">Delete</a>
+                        <a href="javascript:deleteu('{{path('app_delete_user_manager',{'username':u.getusername()})}}')" class="btn btn-danger">Delete</a>
                         
                     </td>
                     </tr>

@@ -50,42 +50,5 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
-    #[Route('/register/ds', name: 'app_ds_register')]
-    public function list_rg(EntityManagerInterface $em): Response
-    {
-        $query = $em->createQuery('SELECT user FROM App\Entity\User user');
-        $lSp = $query->getResult();
-        return $this->render('registration/list.html.twig',[
-            'data' => $lSp
-        ]);
-
-    }
-    #[Route('/register/{id}', name: 'app_edit_register')]
-    public function edit(EntityManagerInterface $em, int $id,Request $req,FileUploader $fileUploader): Response
-    {
-        $user = $em->find(User::class, $id);
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form -> handleRequest($req);
-
-        if ($form->isSubmitted() && $form->isValid()){
-            $data = $form->getData();
-            
-            
-            
-            $user->setUsername($data->getUsername())->setPassword($data->getPassword())->setFirstName($data->getFirstName())->setLastName($data->getLastName());
-            $em->flush();
-            return new RedirectResponse($this->urlGenerator->generate('app_ds_register'));
-        }
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
-    }
-    #[Route('/register/{id}/delete', name: 'app_delete_register')]
-    public function deleteuser(EntityManagerInterface $em, int $id,Request $req): Response
-    {
-        $user = $em->find(User::class, $id);
-        $em->remove($user);
-        $em->flush();
-        return new RedirectResponse($this->urlGenerator->generate('app_ds_register'));
-    }
+    
 }
