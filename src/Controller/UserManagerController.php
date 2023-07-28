@@ -59,8 +59,28 @@ class UserManagerController extends AbstractController
             'data' => $lUser
         ]);
     }
+    #[Route('/user/manager/{username}', name: 'app_edit_user_manager')]
+    public function edit(EntityManagerInterface $em, string $username,Request $req,FileUploader $fileUploader): Response
+    {
+        $u = $em->find(User::class, $username);
+        $form = $this->createForm(UserFormType::class, $u);
+        $form -> handleRequest($req);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $u = $form->getData();
+            
+            
+            
+            $u->setUsername($u->getUsername())->setPassword($u->getPassword())->setFirstName($u->getFirstName())->setLastName($u->getLastName());
+            $em->flush();
+            return new RedirectResponse($this->url->generate('app_user_manager'));
+        }
+        return $this->render('user_manager/index.html.twig', [
+            'u_form' => $form->createView(),
+        ]);
+    }
     #[Route('/user/manager/{username}/delete', name: 'app_delete_user_manager')]
-    public function delete(EntityManagerInterface $em, string $username,Request $req): Response
+    public function deleteu(EntityManagerInterface $em, string $username,Request $req): Response
     {
         $u = $em->find(User::class, $username);
         $em->remove($u);
