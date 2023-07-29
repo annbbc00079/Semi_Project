@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SanPhamRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SanPhamRepository::class)]
@@ -27,6 +29,14 @@ class SanPham
 
     #[ORM\Column(length: 255)]
     private ?string $product_description = null;
+
+    #[ORM\OneToMany(mappedBy: 'item', targetEntity: OrderItem::class)]
+    private Collection $orderItems;
+
+    public function __construct()
+    {
+        $this->orderItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class SanPham
     public function setProductDescription(string $product_description): self
     {
         $this->product_description = $product_description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItem $orderItem): self
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems->add($orderItem);
+            $orderItem->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderItem(OrderItem $orderItem): self
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getItem() === $this) {
+                $orderItem->setItem(null);
+            }
+        }
 
         return $this;
     }

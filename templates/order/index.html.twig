@@ -1,3 +1,5 @@
+{% form_theme order_form 'bootstrap_4_layout.html.twig' %}
+
 {% extends 'adbase.html.twig' %}
 
 {% block title %}Cart manager
@@ -5,7 +7,12 @@
 
 {% block body %}
 	<div class="container">
-		<a href="{{path('app_ds_san_pham')}}">Add another product</a>
+        {{ form_start(order_form)}}
+        {{ form_widget(order_form)}}
+    
+        <input type="submit" value="Confirm" class="btn btn-primary"/>
+        {{ form_end(sp_form)}}
+        <hr>
 		<table class="table">
 			<tr>
 				<th>STT</th>
@@ -13,29 +20,24 @@
 				<th>Price</th>
 				<th>Quantity</th>
 				<th>Total</th>
-				<th>Action</th>
 			</tr>
 			{% for item in cart_manager.items %}
 				<tr>
-					<form action="{{path('app_cart_update')}}" method="POST">
 						<td>{{loop.index}}</td>
 						<td>{{item.product.id}}
 							-
 							{{item.product.name}}</td>
 						<td>{{item.product.price}}</td>
 						<td>
-                            <input type='hidden' value='{{item.product.id}}' name='product_id'/>
-							<input type='number' onchange="this.form.submit()" value='{{item.quantity}}' min="1" name='qty'/>
+							{{item.quantity}}
 						</td>
 						<td>{{item.amount}}</td>
-						<td>
-							<a href="{{path('app_cart_remove',{'product_id':item.product.id})}}">Remove</a>
-						</td>
+						
 					</form>
 				</tr>
 			{% endfor %}
 			<tr>
-				<td colspan="5" class="text-center">Sum</td>
+				<td colspan="4" class="text-center">Sum</td>
 				<td>{{cart_manager.amount}}</td>
 			</tr>
 		</table>
