@@ -1,7 +1,9 @@
+{% form_theme order_form 'bootstrap_4_layout.html.twig' %}
 
 {% extends 'adbase.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Order manager
+{% endblock %}
 
 {% block body %}
 <div id="wrapper">
@@ -18,12 +20,13 @@
         <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_san_pham')}}"><i class=""></i><span>List Product</span></a></li>
         
         <hr class="sidebar-divider my-0">
-        <li class="nav-item active"><a class="nav-link" href="{{path('app_register')}}"><i class=""></i><span>Add User Profile</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_user_manager_add')}}"><i class=""></i><span>Add Admin Profile</span></a></li>
 
         <hr class="sidebar-divider my-0" >
         <li class="nav-item active"><a class="nav-link" href="{{path('app_user_manager')}}"><i class=""></i><span>List Admin Profile</span></a></li>
         
         <hr class="sidebar-divider my-0" >
+        
         <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_contact')}}"><span>List Contact</span></a></li>
         
         <hr class="sidebar-divider my-0" >
@@ -91,52 +94,44 @@
                     <a class="modal-footer" class="btn btn-secondary"  href="javascript:Logout('{{path('app_login')}}')" ><button>Logout</button></a>
                 </ul>
             </nav>
+                <!-- Begin Page Content -->
 <div calss="container-fluid ">
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h4>List Contact Page</h4>
-          <!--<h6 class="m-0 font-wight-bold text-primary" > Admin Profile
-            <a href="{{path('app_contact')}}" class="btn btn-primary">ADD Admin Profile</a>
-          </h6>-->
-    </div>
-    <div class="card-body">
-        <div class="table-reponsive">
-            <table class="table table-bordered" id="database" with="100%" cellspacing="0">
-                <thead>
-                   <tr>
-                    <th>No.</th>
-                    <th>ID</th>
-                    <th>Fullname</th>
-                    <th>Email</th>
-                    <th>Title</th>
-                    <th>Message</th>
-                    <th>Move</th>
-                   </tr>
-                </thead>
-                <tbody>
-                    {% for ct in data %}
-                   <tr>
-                    <td>{{loop.index}}</td>
-                    <td>{{ct.getId()}}</td>
-                    <td>{{ct.getContactname()}}</td>
-                    <td>{{ct.getContactemail()}}</td>
-                    <td>{{ct.getContacttitle()}}</td>
-                    <td>{{ct.getContactmessage()}}</td>
-                    <td>
-                        <a href="javascript:deletect('{{path('app_delete_contact',{'id':ct.getId()})}}')" class="btn btn-danger">DELETE</a>
-                    </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
+        <div class="container">     
+		<table class="table">
+			<tr>
+				<th>No.</th>
+				<th>Customer Name</th>
+				<th>Customer Address</th>
+				<th>Customer Phone</th>
+				<th>Total Price</th>
+				<th>Detail</th>
+			</tr>
+			{% for order in order %}
+        	<tr>
+        		<td>{{loop.index}}</td>
+       			<td>{{order.getCustomerName()}}</td>
+        		<td>{{order.getCustomerAddress()}}</td>
+        		<td>{{order.getCustomerPhone()}}</td>
+				<td>{{order.getTotalPrice()}}</td>
+				<td></td>
+			</tr>
+			{% endfor %}
+</tbody>
+</table>
 </div>
 </div>
-
+</div>
 </div>
 {% endblock %}
 {% block javascripts %}
+<script>
+function deletesp(url){
+    if(confirm("Do you delete product?")){
+        window.location.href = url;
+    }
+}
+</script>
 <script>
     function Logout(url){
         if(confirm("Do you want to sign out?")){
@@ -144,13 +139,6 @@
         }
     }
     </script>
-    <script>
-        function deletect(url){
-            if(confirm("Do you delete contact?")){
-                window.location.href = url;
-            }
-        }
-        </script>
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

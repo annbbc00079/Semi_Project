@@ -35,11 +35,11 @@
 				</tr>
 			{% endfor %}
 			<tr>
-				<td colspan="5" class="text-center">Sum</td>
+				<td colspan='5' class='text-center'>SUM</td>
 				<td>{{cart_manager.amount}}</td>
 			</tr>
 		</table>
-		<a href="{{path('app_order')}}"></a>
+		<a href="{{path('app_order')}}">Check out</a>
 	</div>
 {% endblock %}
 {% block javascripts %}

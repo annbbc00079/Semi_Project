@@ -27,7 +27,7 @@
         <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_contact')}}"><span>List Contact</span></a></li>
         
         <hr class="sidebar-divider my-0" >
-        <li class="nav-item active"><a class="nav-link" href="#"><span>List Oder</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_order')}}"><span>List Order</span></a></li>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
     </ul>
@@ -123,9 +123,9 @@
         <td>
             <a href="{{path('app_edit_san_pham',{'id':sp.getId()})}}" class="btn btn-success">Edit</a>
             <a href="javascript:deletesp('{{path('app_delete_san_pham',{'id':sp.getId()})}}')" class="btn btn-danger">Delete</a>
-            <!--<form>
+            <form>
             <button type="submit" formmethod="post" formaction="{{path('app_cart_add',{'product_id':sp.getId()})}}">Add to cart</button>
-            </form>-->
+            </form>
         </td>
     </tr>
 {% endfor %}

@@ -22,7 +22,7 @@ class OrderController extends AbstractController
     {      
     }
     #[Route('/order', name: 'app_order')]
-    public function index(Request $req, ntityManagerInterface $em): Response
+    public function index(Request $req, EntityManagerInterface $em): Response
     {
         $order = new Order();
         $message = $req->query->get('message');
@@ -56,15 +56,24 @@ class OrderController extends AbstractController
                 $em->getConnection()->rollBack();
                 return new RedirectResponse($this->urlGenerator->generate('app_order',["message"=>"Lỗi! Không thể tạo đơn hàng"]));
             }
-            
-            return new RedirectResponse($this->urlGenerator->generate('app_ds_san_pham'));
+            return new RedirectResponse($this->urlGenerator->generate('app_ds_san_pham',["message"=>"Tạo đơn hàng thành công"]));
         }
 
         
         return $this->render('order/index.html.twig', [
-            'oder_form' => $form->createView(),
+            'order_form' => $form->createView(),
             'cart_manager' =>$cart_manager,
             'message' => $message
         ]);
+    }
+    #[Route('/order/ds', name: 'app_ds_order')]
+    public function list_o(EntityManagerInterface $em): Response
+    {
+        $query = $em->createQuery('SELECT order FROM App\Entity\Order order');
+        $lSp = $query->getResult();
+        return $this->render('order/list.html.twig', [
+            'data' => $lSp
+        ]);
+
     }
 }
