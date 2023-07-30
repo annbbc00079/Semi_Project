@@ -1,7 +1,9 @@
-{% form_theme sp_form 'bootstrap_4_layout.html.twig' %}
+
+
 {% extends 'adbase.html.twig' %}
 
-{% block title %}Hello Note form!{% endblock %}
+{% block title %}Order detail manager
+{% endblock %}
 
 {% block body %}
 <div id="wrapper">
@@ -92,21 +94,61 @@
                     <a class="modal-footer" class="btn btn-secondary"  href="javascript:Logout('{{path('app_login')}}')" ><button>Logout</button></a>
                 </ul>
             </nav>
-                <!-- Begin Page Content -->
-                <div calss="container-fluid ">
-                    <div class="card shadow mb-4">
-                <div class="container">                
-    <h1>Add Product</h1>
-    {{ form_start(sp_form)}}
-    {{ form_widget(sp_form)}}
-    
-    <input type="submit" value="Submit" class="btn btn-primary"/>
-    {{ form_end(sp_form)}}
-    </div>
-</div>
+        <!-- Begin Page Content -->
+<div calss="container-fluid ">
+    <div class="card shadow mb-4">     
+        <div class="card-body">
+            <div class="table-reponsive">
+            <table class="table table-bordered" id="database" with="100%" cellspacing="0">
+            <thead>
+            <tr>
+                
+                <th>Product name</th>
+                <th>Product price</th>
+                <th>Quantity</th>
+                <th>Sumary</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_manager.items %}
+            <tr>
+                <td>{{item.product.id}}
+                    -
+                    {{item.product.name}}</td>
+                <td>{{item.product.price}}</td>
+                <td>
+                    {{item.quantity}}
+                </td>
+                <td>{{item.amount}} $</td>
+            </form>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3" class="text-center">Total</td>
+        <td>{{cart_manager.amount}}</td>
+    </tr>
+</tbody>
 
+</table>
+<td>
+    <a href="{{path('app_ds_order')}}" class="btn btn-success">Back to List Order</a>
+</td>
+<br>
+<br>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}
 {% block javascripts %}
+<script>
+function deletesp(url){
+    if(confirm("Do you delete product?")){
+        window.location.href = url;
+    }
+}
+</script>
 <script>
     function Logout(url){
         if(confirm("Do you want to sign out?")){

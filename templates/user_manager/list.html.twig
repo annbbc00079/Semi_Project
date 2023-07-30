@@ -104,29 +104,23 @@
                 <thead>
                    <tr>
                     <th>No.</th>
+                    <td>ID</td>
                     <th>Username</th>
                     <th>Fullname</th>
                     <th>Password</th>
-                    <th>Edit</th>
                     <th>Delete</th>
                    </tr>
                 </thead>
                 <tbody>
                     {% for u in data %}
-                   <tr>
+                    <tr>
                     <td>{{loop.index}}</td>
+                    <td>{{u.getId()}}</td>
                     <td>{{u.getUsername()}}</td>                    
                     <td>{{u.getFirstname()}} {{u.getLastname()}}</td>
                     <td>{{u.getPassword()}}</td>
-                    <td>
-                        
-                        <a href="{{path('app_edit_user_manager',{'username':u.getUsername()})}}" class="btn btn-success">Edit</a> 
-                       
-                    </td>
-                    <td>
-                        
-                        <a href="javascript:deleteu('{{path('app_delete_user_manager',{'username':u.getUsername()})}}')" class="btn btn-danger">Delete</a>
-                        
+                    <td> 
+                    <a href="javascript:deleteu('{{path('app_delete_user_manager',{'id':u.getId()})}}')" class="btn btn-danger">Delete</a>
                     </td>
                     </tr>
                 </tbody>

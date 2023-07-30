@@ -87,9 +87,10 @@ class SanPhamController extends AbstractController
     {
         $cate = $em->find(Category::class, $id);
         $lSp= $cate->getSanPhams();
-        
+        $message = $req->query->get('message');
         return $this->render('san_pham/list.html.twig', [
-            'data' => $lSp
+            'data' => $lSp,
+            "message"=>$message
         ]);
     }
 }

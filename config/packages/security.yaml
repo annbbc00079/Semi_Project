@@ -38,6 +38,11 @@ security:
 
         - { path: ^/user/manager, roles: ROLE_ADMIN }
         - { path: ^/user/manager/add, roles: ROLE_ADMIN }
+        - { path: ^/san/pham/ds, roles: ROLE_ADMIN }
+        - { path: ^/san/pham, roles: ROLE_ADMIN }
+        - { path: ^/contact/ds, roles: ROLE_ADMIN }
+        - { path: ^/order/ds, roles: ROLE_ADMIN }
+        
 
 
 when@test:

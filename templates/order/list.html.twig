@@ -1,4 +1,4 @@
-{% form_theme order_form 'bootstrap_4_layout.html.twig' %}
+
 
 {% extends 'adbase.html.twig' %}
 
@@ -20,7 +20,7 @@
         <li class="nav-item active"><a class="nav-link" href="{{path('app_ds_san_pham')}}"><i class=""></i><span>List Product</span></a></li>
         
         <hr class="sidebar-divider my-0">
-        <li class="nav-item active"><a class="nav-link" href="{{path('app_user_manager_add')}}"><i class=""></i><span>Add Admin Profile</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{path('app_register')}}"><i class=""></i><span>Add User Profile</span></a></li>
 
         <hr class="sidebar-divider my-0" >
         <li class="nav-item active"><a class="nav-link" href="{{path('app_user_manager')}}"><i class=""></i><span>List Admin Profile</span></a></li>
@@ -96,9 +96,11 @@
             </nav>
                 <!-- Begin Page Content -->
 <div calss="container-fluid ">
-    <div class="card shadow mb-4">
-        <div class="container">     
-		<table class="table">
+    <div class="card shadow mb-4">     
+		<div class="card-body">
+			<div class="table-reponsive">
+			<table class="table table-bordered" id="database" with="100%" cellspacing="0">
+            <thead>
 			<tr>
 				<th>No.</th>
 				<th>Customer Name</th>
@@ -107,14 +109,18 @@
 				<th>Total Price</th>
 				<th>Detail</th>
 			</tr>
-			{% for order in order %}
+            </thead>
+            <tbody>
+			{% for order in data %}
         	<tr>
         		<td>{{loop.index}}</td>
        			<td>{{order.getCustomerName()}}</td>
         		<td>{{order.getCustomerAddress()}}</td>
         		<td>{{order.getCustomerPhone()}}</td>
 				<td>{{order.getTotalPrice()}}</td>
-				<td></td>
+				<td>
+					<a href="{{path('app_order_dt')}}" class="btn btn-success ">Detail</a>
+				</td>
 			</tr>
 			{% endfor %}
 </tbody>
@@ -123,6 +129,7 @@
 </div>
 </div>
 </div>
+
 {% endblock %}
 {% block javascripts %}
 <script>

@@ -59,30 +59,11 @@ class UserManagerController extends AbstractController
             'data' => $lUser
         ]);
     }
-    #[Route('/user/manager/{username}', name: 'app_edit_user_manager')]
-    public function edit(EntityManagerInterface $em, string $username,Request $req,FileUploader $fileUploader): Response
+   
+    #[Route('/user/manager/{id}/delete', name: 'app_delete_user_manager')]
+    public function deleteu(EntityManagerInterface $em, int $id,Request $req): Response
     {
-        $u = $em->find(User::class, $username);
-        $form = $this->createForm(UserFormType::class, $u);
-        $form -> handleRequest($req);
-
-        if ($form->isSubmitted() && $form->isValid()){
-            $u = $form->getData();
-            
-            
-            
-            $u->setUsername($u->getUsername())->setPassword($u->getPassword())->setFirstName($u->getFirstName())->setLastName($u->getLastName());
-            $em->flush();
-            return new RedirectResponse($this->url->generate('app_user_manager'));
-        }
-        return $this->render('user_manager/index.html.twig', [
-            'u_form' => $form->createView(),
-        ]);
-    }
-    #[Route('/user/manager/{username}/delete', name: 'app_delete_user_manager')]
-    public function deleteu(EntityManagerInterface $em, string $username,Request $req): Response
-    {
-        $u = $em->find(User::class, $username);
+        $u = $em->find(User::class, $id);
         $em->remove($u);
         $em->flush();
         return new RedirectResponse($this->url->generate('app_user_manager'));

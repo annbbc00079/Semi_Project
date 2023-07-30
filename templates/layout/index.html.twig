@@ -1,7 +1,7 @@
-{% form_theme sp_form 'bootstrap_4_layout.html.twig' %}
+
 {% extends 'adbase.html.twig' %}
 
-{% block title %}Hello Note form!{% endblock %}
+{% block title %}Hello My Admin{% endblock %}
 
 {% block body %}
 <div id="wrapper">
@@ -92,19 +92,9 @@
                     <a class="modal-footer" class="btn btn-secondary"  href="javascript:Logout('{{path('app_login')}}')" ><button>Logout</button></a>
                 </ul>
             </nav>
-                <!-- Begin Page Content -->
-                <div calss="container-fluid ">
-                    <div class="card shadow mb-4">
-                <div class="container">                
-    <h1>Add Product</h1>
-    {{ form_start(sp_form)}}
-    {{ form_widget(sp_form)}}
-    
-    <input type="submit" value="Submit" class="btn btn-primary"/>
-    {{ form_end(sp_form)}}
-    </div>
-</div>
-
+            <div class="card shadow mb-4"> 
+                <h1><marquee direction='right' scrolldelay='80'>Welcome to Administrator page</marquee></h1>
+                </div>
 {% endblock %}
 {% block javascripts %}
 <script>
