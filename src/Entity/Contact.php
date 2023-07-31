@@ -13,67 +13,52 @@ class Contact
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $contact_name = null;
+    #[ORM\Column(length: 50)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 150)]
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $contact_email = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $contact_title = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $contact_message = null;
+    private ?string $message = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getContactName(): ?string
+    public function getName(): ?string
     {
-        return $this->contact_name;
+        return $this->name;
     }
 
-    public function setContactName(string $contact_name): self
+    public function setName(string $name): static
     {
-        $this->contact_name = $contact_name;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getContactEmail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->contact_email;
+        return $this->email;
     }
 
-    public function setContactEmail(string $contact_email): self
+    public function setEmail(string $email): static
     {
-        $this->contact_email = $contact_email;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getContactTitle(): ?string
+    public function getMessage(): ?string
     {
-        return $this->contact_title;
+        return $this->message;
     }
 
-    public function setContactTitle(string $contact_title): self
+    public function setMessage(string $message): static
     {
-        $this->contact_title = $contact_title;
-
-        return $this;
-    }
-
-    public function getContactMessage(): ?string
-    {
-        return $this->contact_message;
-    }
-
-    public function setContactMessage(string $contact_message): self
-    {
-        $this->contact_message = $contact_message;
+        $this->message = $message;
 
         return $this;
     }

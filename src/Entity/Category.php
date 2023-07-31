@@ -21,6 +21,9 @@ class Category
     #[ORM\OneToMany(mappedBy: 'cate', targetEntity: SanPham::class)]
     private Collection $sanPhams;
 
+    #[ORM\Column(length: 255)]
+    private ?string $photo = null;
+
     public function __construct()
     {
         $this->sanPhams = new ArrayCollection();
@@ -36,7 +39,7 @@ class Category
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -51,7 +54,7 @@ class Category
         return $this->sanPhams;
     }
 
-    public function addSanPham(SanPham $sanPham): self
+    public function addSanPham(SanPham $sanPham): static
     {
         if (!$this->sanPhams->contains($sanPham)) {
             $this->sanPhams->add($sanPham);
@@ -61,7 +64,7 @@ class Category
         return $this;
     }
 
-    public function removeSanPham(SanPham $sanPham): self
+    public function removeSanPham(SanPham $sanPham): static
     {
         if ($this->sanPhams->removeElement($sanPham)) {
             // set the owning side to null (unless already changed)
@@ -69,6 +72,18 @@ class Category
                 $sanPham->setCate(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): static
+    {
+        $this->photo = $photo;
 
         return $this;
     }

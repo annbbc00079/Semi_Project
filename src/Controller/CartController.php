@@ -35,7 +35,7 @@ class CartController extends AbstractController
         $cart_manager = $session->get('cart', new CartManager());
         $cart_manager->addItem($product, 1);
         $session->set('cart', $cart_manager);
-        return new RedirectResponse($this->urlGenerator->generate('app_cart'));
+        return new RedirectResponse($this->urlGenerator->generate('homepage'));
     }
     #[Route('/cart/remove/{product_id}', name: 'app_cart_remove')]
     public function remove(int $product_id, Request $request, EntityManagerInterface $em): Response

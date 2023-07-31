@@ -21,16 +21,16 @@ class SanPham
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'sanPhams')]
     private ?Category $cate = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $product_description = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'item', targetEntity: OrderItem::class)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class)]
     private Collection $orderItems;
 
     public function __construct()
@@ -72,7 +72,7 @@ class SanPham
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): self
+    public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
 
@@ -84,52 +84,52 @@ class SanPham
         return $this->cate;
     }
 
-    public function setCate(?Category $cate): self
+    public function setCate(?Category $cate): static
     {
         $this->cate = $cate;
 
         return $this;
     }
 
-    public function getProductDescription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->product_description;
+        return $this->description;
     }
 
-    public function setProductDescription(string $product_description): self
+    public function setDescription(?string $description): static
     {
-        $this->product_description = $product_description;
+        $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, OrderItem>
-     */
-    public function getOrderItems(): Collection
-    {
-        return $this->orderItems;
-    }
+    // /**
+    //  * @return Collection<int, OrderItem>
+    //  */
+    // public function getOrderItems(): Collection
+    // {
+    //     return $this->orderItems;
+    // }
 
-    public function addOrderItem(OrderItem $orderItem): self
-    {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems->add($orderItem);
-            $orderItem->setItem($this);
-        }
+    // public function addOrderItem(OrderItem $orderItem): static
+    // {
+    //     if (!$this->orderItems->contains($orderItem)) {
+    //         $this->orderItems->add($orderItem);
+    //         $orderItem->setProduct($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeOrderItem(OrderItem $orderItem): self
-    {
-        if ($this->orderItems->removeElement($orderItem)) {
-            // set the owning side to null (unless already changed)
-            if ($orderItem->getItem() === $this) {
-                $orderItem->setItem(null);
-            }
-        }
+    // public function removeOrderItem(OrderItem $orderItem): static
+    // {
+    //     if ($this->orderItems->removeElement($orderItem)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($orderItem->getProduct() === $this) {
+    //             $orderItem->setProduct(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

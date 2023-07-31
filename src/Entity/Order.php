@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -15,6 +16,18 @@ class Order
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class)]
+    private Collection $items;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $status = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $customer_name = null;
@@ -28,15 +41,9 @@ class Order
     #[ORM\Column]
     private ?float $total_price = null;
 
-    #[ORM\Column]
-    private ?bool $status = null;
-
-    #[ORM\OneToMany(mappedBy: 'o', targetEntity: OrderItem::class)]
-    private Collection $orderItems;
-
     public function __construct()
     {
-        $this->orderItems = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,12 +51,93 @@ class Order
         return $this->id;
     }
 
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(OrderItem $item): self
+    {
+        foreach ($this->getItems() as $existingItem) {
+            // The item already exists, update the quantity
+            if ($existingItem->equals($item)) {
+                $existingItem->setQuantity(
+                    $existingItem->getQuantity() + $item->getQuantity()
+                );
+                return $this;
+            }
+        }
+    
+        $this->items[] = $item;
+        $item->setOrderRef($this);
+    
+        return $this;
+    }
+
+    public function removeItem(OrderItem $item): self
+    {
+        foreach ($this->getItems() as $item) {
+            $this->removeItem($item);
+        }
+    
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+    public function getTotal(): float
+    {
+        $total = 0;
+
+        foreach ($this->getItems() as $item) {
+            $total += $item->getTotal();
+        }
+
+        return $total;
+    }
+
     public function getCustomerName(): ?string
     {
         return $this->customer_name;
     }
 
-    public function setCustomerName(string $customer_name): self
+    public function setCustomerName(string $customer_name): static
     {
         $this->customer_name = $customer_name;
 
@@ -61,7 +149,7 @@ class Order
         return $this->customer_address;
     }
 
-    public function setCustomerAddress(string $customer_address): self
+    public function setCustomerAddress(string $customer_address): static
     {
         $this->customer_address = $customer_address;
 
@@ -73,7 +161,7 @@ class Order
         return $this->customer_phone;
     }
 
-    public function setCustomerPhone(string $customer_phone): self
+    public function setCustomerPhone(string $customer_phone): static
     {
         $this->customer_phone = $customer_phone;
 
@@ -85,51 +173,9 @@ class Order
         return $this->total_price;
     }
 
-    public function setTotalPrice(float $total_price): self
+    public function setTotalPrice(float $total_price): static
     {
         $this->total_price = $total_price;
-
-        return $this;
-    }
-
-    public function isStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, OrderItem>
-     */
-    public function getOrderItems(): Collection
-    {
-        return $this->orderItems;
-    }
-
-    public function addOrderItem(OrderItem $orderItem): self
-    {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems->add($orderItem);
-            $orderItem->setO($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrderItem(OrderItem $orderItem): self
-    {
-        if ($this->orderItems->removeElement($orderItem)) {
-            // set the owning side to null (unless already changed)
-            if ($orderItem->getO() === $this) {
-                $orderItem->setO(null);
-            }
-        }
 
         return $this;
     }

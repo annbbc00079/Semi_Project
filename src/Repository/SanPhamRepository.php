@@ -6,6 +6,7 @@ use App\Entity\SanPham;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<SanPham>
  *
@@ -37,6 +38,15 @@ class SanPhamRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByKeyword($keyword)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.name LIKE :keyword')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

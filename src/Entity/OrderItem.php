@@ -15,14 +15,14 @@ class OrderItem
 
     #[ORM\ManyToOne(inversedBy: 'orderItems')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Order $o = null;
-
-    #[ORM\ManyToOne(inversedBy: 'orderItems')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?SanPham $item = null;
+    private ?SanPham $product = null;
 
     #[ORM\Column]
     private ?int $quantity = null;
+
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Order $orderRef = null;
 
     #[ORM\Column]
     private ?float $price = null;
@@ -32,26 +32,14 @@ class OrderItem
         return $this->id;
     }
 
-    public function getO(): ?Order
+    public function getProduct(): ?SanPham
     {
-        return $this->o;
+        return $this->product;
     }
 
-    public function setO(?Order $o): self
+    public function setProduct(?SanPham $product): static
     {
-        $this->o = $o;
-
-        return $this;
-    }
-
-    public function getItem(): ?SanPham
-    {
-        return $this->item;
-    }
-
-    public function setItem(?SanPham $item): self
-    {
-        $this->item = $item;
+        $this->product = $product;
 
         return $this;
     }
@@ -61,11 +49,31 @@ class OrderItem
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self
+    public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
 
         return $this;
+    }
+
+    public function getOrderRef(): ?Order
+    {
+        return $this->orderRef;
+    }
+
+    public function setOrderRef(?Order $orderRef): self
+    {
+        $this->orderRef = $orderRef;
+
+        return $this;
+    }
+    public function equals(OrderItem $item): bool
+    {
+        return $this->getProduct()->getId() === $item->getProduct()->getId();
+    }
+    public function getTotal(): float
+    {
+        return $this->getProduct()->getPrice() * $this->getQuantity();
     }
 
     public function getPrice(): ?float
@@ -73,7 +81,7 @@ class OrderItem
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 

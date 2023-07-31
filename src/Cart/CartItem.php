@@ -1,6 +1,8 @@
 <?php
 namespace App\Cart;
+
 class CartItem{
+    
     private $product;
     public $quantity;
   
