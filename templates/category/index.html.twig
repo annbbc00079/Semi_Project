@@ -1,0 +1,39 @@
+{% form_theme category_form 'bootstrap_5_layout.html.twig' %}
+
+{% extends 'adbase.html.twig' %}
+
+{% block title %}Manage Category{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        {{form_start(category_form)}}
+        {{form_widget(category_form)}}
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        {{form_end(category_form)}}
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+<script>
+function deletesp(url){
+    if(confirm("Do you delete product?")){
+        window.location.href = url;
+    }
+}
+</script>
+<script>
+    function Logout(url){
+        if(confirm("Do you want to sign out?")){
+            window.location.href = url;
+        }
+    }
+    </script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('vendor/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    <link rel="stylesheet" href="{{asset('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i')}}">
+{% endblock %}

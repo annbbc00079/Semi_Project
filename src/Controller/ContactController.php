@@ -34,9 +34,9 @@ class ContactController extends AbstractController
             $em->flush();
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_ds_contact');
+            return $this->redirectToRoute('homepage');
         }
-        return $this->render('contact/index.html.twig', [
+        return $this->render('contact/success.html.twig', [
             'contact_form' => $form->createView(),
         ]);
     }
