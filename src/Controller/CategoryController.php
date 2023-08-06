@@ -29,17 +29,13 @@ class CategoryController extends AbstractController
         $form -> handleRequest($req);
         if ($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
-             
             $file = $form->get("photo")->getData();
-
             $fileName = $fileUploader->upload($file);
             $data -> setPhoto($fileName);
-
             $em-> persist($data);
             $em->flush();
             return new RedirectResponse($this->url->generate('app_ds_category'));
         }
-
         return $this->render('category/index.html.twig', [
             'category_form' => $form->createView(),
         ]);
@@ -63,7 +59,6 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
-            
             $file = $form-> get("photo")->getData();
             if ($file){   
             $fileName = $fileUploader->upload($file);

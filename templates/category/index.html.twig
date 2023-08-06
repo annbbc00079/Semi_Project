@@ -5,12 +5,18 @@
 {% block title %}Manage Category{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
+<div calss="container-fluid ">
+    <div class="card shadow mb-4">
+<div class="container mt-5">                
+<h1>Add Category</h1>
+    
         {{form_start(category_form)}}
         {{form_widget(category_form)}}
         <input type="submit" value="Submit" class="btn btn-primary" />
         {{form_end(category_form)}}
     </div>
+</div>
+</div>
 
 {% endblock %}
 {% block javascripts %}
