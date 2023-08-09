@@ -36,7 +36,7 @@ class ContactController extends AbstractController
 
             return $this->redirectToRoute('homepage');
         }
-        return $this->render('contact/success.html.twig', [
+        return $this->render('contact/index.html.twig', [
             'contact_form' => $form->createView(),
         ]);
     }
